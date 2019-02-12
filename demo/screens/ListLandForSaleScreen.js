@@ -5,18 +5,7 @@ import PropTypes from "prop-types";
 import LandForSaleList from "@presentational/LandForSaleList";
 import LandForSaleListItem from "@presentational/LandForSaleListItem";
 
-import ContractsAddresses from "@constants/ContractsAddresses";
-const { ESTATE_ADDRESS, MARKETPLACE_ADDRESS } = ContractsAddresses;
-
-import { Action } from "tasit-sdk";
-const { ERC721, Marketplace } = Action;
-const { Estate } = ERC721;
-const { Decentraland: DecentralandMarketplace } = Marketplace;
-
 export class ListLandForSaleScreen extends React.Component {
-  estateContract = new Estate(ESTATE_ADDRESS);
-  marketplaceContract = new DecentralandMarketplace(MARKETPLACE_ADDRESS);
-
   componentDidMount = async () => {
     const { setLandForSaleList } = this.props;
     const landForSaleList = await this._getLandForSaleList();
@@ -29,7 +18,7 @@ export class ListLandForSaleScreen extends React.Component {
   // TODO: Rewrite this function when we move to testnet
   _getLandForSaleList = async () => {
     const orders = [];
-    const totalSupply = await this.estateContract.totalSupply();
+    const totalSupply = 5;
 
     for (let estateId = 1; estateId <= Number(totalSupply); estateId++) {
       const order = this._getLandForSale(estateId);
@@ -40,29 +29,17 @@ export class ListLandForSaleScreen extends React.Component {
   };
 
   _getLandForSale = async estateId => {
-    const estateName = await this.estateContract.getMetadata(estateId);
-    const [
-      orderId,
-      seller,
-      price,
-      expiresAt,
-    ] = await this.marketplaceContract.auctionByAssetId(estateId);
-
-    const hasOrder = parseInt(orderId, 16) !== 0;
-    if (!hasOrder) throw Error(`Estate (id:${estateId}) has no sell order.`);
-
-    // Note: Conversion to USD will be implemented on v0.2.0
+    const estateName = `cool estate 0x${estateId}`;
+    const price = 1e18;
     const manaPerUsd = 30;
     const priceMana = Number(price.toString()) / 1e18;
     const priceUSD = Number(priceMana / manaPerUsd).toFixed(2);
     const imgUrl = `https://api.decentraland.org/v1/estates/${estateId}/map.png`;
 
     return {
-      id: orderId,
+      id: estateId.toString(),
       priceMana,
       priceUSD,
-      seller,
-      expiresAt,
       // TODO: Create an enum type for identify asset
       asset: {
         id: estateId,
