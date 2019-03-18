@@ -19,7 +19,11 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "io.tasit.decentraland"
+    },
+    "android": {
+      "package": "io.tasit.decentraland"
     }
   }
 }
