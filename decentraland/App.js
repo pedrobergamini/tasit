@@ -9,7 +9,12 @@ import decentralandApp from "./redux/reducers";
 import { Action } from "tasit-sdk";
 const { ConfigLoader } = Action;
 import tasitSdkConfig from "./config/default";
-import { checkBlockchain, showFatalError } from "./helpers";
+import {
+  checkBlockchain,
+  showFatalError,
+  showError,
+  showWarn,
+} from "./helpers";
 import { Root } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -21,29 +26,55 @@ export default class App extends React.Component {
   };
 
   async componentDidMount() {
-    // Ignoring setting timer warnings on the app UI
-    YellowBox.ignoreWarnings(["Setting a timer"]);
-
     await this._setupTasitSDK();
     await this._setupFonts();
+    try {
+      // Ignoring setting timer warnings on the app UI
+      YellowBox.ignoreWarnings(["Setting a timer"]);
+    } catch (error) {
+      showWarn(`Error on YellowBox setup`);
+    }
   }
 
   // Refs: https://docs.nativebase.io/docs/GetStarted.html
   async _setupFonts() {
-    await Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
-      ...Ionicons.font,
-    });
+    try {
+      await Font.loadAsync({
+        Roboto: require("native-base/Fonts/Roboto.ttf"),
+        Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+        ...Ionicons.font,
+      });
+    } catch (error) {
+      showError(`Error on fonts setup.`);
+    }
   }
 
   async _setupTasitSDK() {
-    ConfigLoader.setConfig(tasitSdkConfig);
-    const connectionOK = await checkBlockchain();
-    if (!connectionOK) {
-      const errorMessage = `Failed to establish the connection to the blockchain.
-Is the 'config/default.js' file correct?`;
-      showFatalError(errorMessage);
+    try {
+      ConfigLoader.setConfig(tasitSdkConfig);
+    } catch (error) {
+      showError(`Error on reading config file. Using the default config.`);
+      ConfigLoader.setConfig({
+        provider: {
+          network: "ropsten",
+          provider: "fallback",
+          pollingInterval: 4000,
+        },
+        events: {
+          timeout: 10000,
+        },
+      });
+    }
+
+    try {
+      const connectionOK = await checkBlockchain();
+      if (!connectionOK) {
+        const errorMessage = `Failed to establish the connection to the blockchain.
+  Is the 'config/default.js' file correct?`;
+        showFatalError(errorMessage);
+      }
+    } catch (error) {
+      showFatalError(`Failed to establish the connection to the blockchain.`);
     }
   }
 

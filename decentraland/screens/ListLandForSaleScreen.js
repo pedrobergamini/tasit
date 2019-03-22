@@ -34,6 +34,7 @@ export class ListLandForSaleScreen extends React.Component {
 
     const fromBlock = 0;
     const openSellOrdersEvents = await getOpenSellOrders(fromBlock);
+    showInfo(`${openSellOrdersEvents.length} assets for sale found.`);
 
     // Note: Getting only the first 10 assets for now
     // See more: https://github.com/tasitlabs/tasit/issues/155
