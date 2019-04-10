@@ -116,16 +116,10 @@ export const fundAccountWithMana = accountAddress => {
   return action;
 };
 
-const getTransactionHashFromAction = async action => {
-  const tx = await action.getTransaction();
-  const { hash: transactionHash } = tx;
-  return transactionHash;
-};
-
 // Note: This could live inside of the Action class as `buildLink()` function
-export const buildBlockchainUrlFromAction = async action => {
+export const buildBlockchainUrlFromActionId = actionId => {
   const networkName = getNetworkName();
-  const transactionHash = await getTransactionHashFromAction(action);
+  const transactionHash = actionId;
   const url = `https://${networkName}.etherscan.io/tx/${transactionHash}`;
   return url;
 };
@@ -206,5 +200,5 @@ export default {
   listsAreEqual,
   openURL,
   getNetworkName,
-  buildBlockchainUrlFromAction,
+  buildBlockchainUrlFromActionId,
 };

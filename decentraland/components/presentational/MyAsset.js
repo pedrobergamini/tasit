@@ -7,12 +7,11 @@ import Estate from "./Estate";
 import Parcel from "./Parcel";
 import AssetTypes from "@constants/AssetTypes";
 import AssetName from "./AssetName";
-import { anAction } from "@helpers/testHelpers";
 
 const { ESTATE, PARCEL } = AssetTypes;
 
 export default function MyAsset({ asset }) {
-  const { type } = asset;
+  const { type, actionId } = asset;
 
   return (
     <View style={styles.assetContainer}>
@@ -26,7 +25,7 @@ export default function MyAsset({ asset }) {
       })()}
       <View style={styles.landInfoContainer}>
         <AssetName asset={asset} />
-        <LinkToBlockchain action={anAction} />
+        <LinkToBlockchain actionId={actionId} />
       </View>
     </View>
   );

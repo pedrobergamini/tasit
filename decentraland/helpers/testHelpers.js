@@ -30,9 +30,8 @@ export const parcelForSale = {
 };
 
 export const anAction = {
-  getTransaction: () => ({
-    hash: "0x1234567890123456789012345678901234567890",
-  }),
+  getId: async () =>
+    "0x1234567890123456789012345678901234567890123456789012345678901234",
 };
 
 export default {

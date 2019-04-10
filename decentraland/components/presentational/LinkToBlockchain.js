@@ -4,14 +4,14 @@ import { Button, Icon } from "native-base";
 import {
   showError,
   openURL,
-  buildBlockchainUrlFromAction,
+  buildBlockchainUrlFromActionId,
   getNetworkName,
 } from "@helpers";
 
 const supportedNetworks = ["ropsten"];
 
-const _openLinkOf = async action => {
-  const url = await buildBlockchainUrlFromAction(action);
+const _openLinkOf = async actionId => {
+  const url = await buildBlockchainUrlFromActionId(actionId);
   try {
     await openURL(url);
   } catch (err) {
@@ -19,16 +19,14 @@ const _openLinkOf = async action => {
   }
 };
 
-export default function LinkToBlockchain(props) {
-  const { action } = props;
-
+export default function LinkToBlockchain({ actionId }) {
   // Note: Use 'ropsten' network for tests on development env
   const networkName = getNetworkName();
   const isNetworkSupported = supportedNetworks.includes(networkName);
 
-  if (!isNetworkSupported || !action) return null;
+  if (!isNetworkSupported || !actionId) return null;
 
-  const openLink = () => _openLinkOf(action);
+  const openLink = () => _openLinkOf(actionId);
   return (
     <Button transparent onPress={openLink}>
       <Icon name="eye" />
@@ -37,5 +35,5 @@ export default function LinkToBlockchain(props) {
 }
 
 LinkToBlockchain.propTypes = {
-  action: PropTypes.object,
+  actionId: PropTypes.string,
 };
