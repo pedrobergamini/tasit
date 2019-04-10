@@ -1,17 +1,18 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import PropTypes from "prop-types";
 import { responsiveWidth } from "react-native-responsive-dimensions";
+import LinkToBlockchain from "./LinkToBlockchain";
 import Estate from "./Estate";
 import Parcel from "./Parcel";
 import AssetTypes from "@constants/AssetTypes";
+import AssetName from "./AssetName";
+import { anAction } from "@helpers/testHelpers";
 
 const { ESTATE, PARCEL } = AssetTypes;
 
 export default function MyAsset({ asset }) {
   const { type } = asset;
-  let { name } = asset;
-  if (!name) name = "(No name for this one right now)";
 
   return (
     <View style={styles.assetContainer}>
@@ -23,7 +24,10 @@ export default function MyAsset({ asset }) {
             return <Parcel parcel={asset} />;
         }
       })()}
-      <Text>{name}</Text>
+      <View style={styles.landInfoContainer}>
+        <AssetName asset={asset} />
+        <LinkToBlockchain action={anAction} />
+      </View>
     </View>
   );
 }
@@ -33,6 +37,10 @@ MyAsset.propTypes = {
 };
 
 const styles = StyleSheet.create({
+  landInfoContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   assetContainer: {
     width: responsiveWidth(95),
   },

@@ -9,6 +9,7 @@ import {
 import Colors from "@constants/Colors";
 import { Button, Icon } from "native-base";
 import { formatNumber } from "@helpers";
+import AssetName from "./AssetName";
 
 const onPriceInfo = () => {
   const title = "";
@@ -19,14 +20,10 @@ const onPriceInfo = () => {
 
 export function LandForSaleInfo({ landForSale }) {
   const { asset } = landForSale;
-  let { name } = asset;
-  if (!name) name = "(No name for this one right now)";
 
   return (
     <View style={styles.landInfoContainer}>
-      <View style={styles.landNameContainer}>
-        <Text style={styles.landName}>{name}</Text>
-      </View>
+      <AssetName asset={asset} />
       <LandForSalePrice landForSale={landForSale} />
     </View>
   );
@@ -67,16 +64,6 @@ const styles = StyleSheet.create({
   landInfoContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  // One alternate approach to consider here is if there were two containers
-  // that both flex to fill the size they're in following a 1:1 ratio.
-  landNameContainer: {
-    width: responsiveWidth(50),
-    paddingTop: responsiveHeight(1),
-  },
-  landName: {
-    color: Colors.assetInfoText,
-    fontWeight: "bold",
   },
   landPriceContainer: {
     flexDirection: "row",
