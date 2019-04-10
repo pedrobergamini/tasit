@@ -13,9 +13,16 @@ import {
   SET_MY_ASSETS_LIST,
 } from "./actions";
 import { removeFromList } from "@helpers";
-
 import AccountCreationStatus from "@constants/AccountCreationStatus";
 const { NOT_STARTED } = AccountCreationStatus;
+
+const removeAssetFromList = (list, toRemove) => {
+  const areEqual = (a1, a2) => a1.id === a2.id;
+  return removeFromList(list, toRemove, areEqual);
+};
+
+// Note: Both asset and assetForSale objects have the `id` field as key
+const removeAssetForSaleFromList = removeAssetFromList;
 
 function accountInfo(
   state = {
@@ -61,7 +68,7 @@ function assetsForSale(state = { list: [], loadingInProgress: true }, action) {
       return { ...state, list: [...state.list, landForSale] };
     case REMOVE_LAND_FOR_SALE: {
       let { list: assetsForSale } = state;
-      const list = removeFromList(assetsForSale, landForSale);
+      const list = removeAssetForSaleFromList(assetsForSale, landForSale);
       return { ...state, list };
     }
     case SET_LOADING_ASSETS_FOR_SALE_IN_PROGRESS:
@@ -78,7 +85,7 @@ function myAssets(state = { list: [] }, action) {
       return { ...state, list: [myAsset, ...state.list] };
     case REMOVE_MY_ASSET_FROM_LIST: {
       const { list: myAssets } = state;
-      const list = removeFromList(myAssets, myAsset);
+      const list = removeAssetFromList(myAssets, myAsset);
       return { ...state, list };
     }
     case SET_MY_ASSETS_LIST: {

@@ -165,8 +165,8 @@ export const formatNumber = number => {
   return formattedNumber;
 };
 
-export const removeFromList = (list, toRemove) =>
-  list.filter(e => e !== toRemove);
+export const removeFromList = (list, toRemove, elementsAreEqual) =>
+  list.filter(e => !elementsAreEqual(e, toRemove));
 
 export const listsAreEqual = (first, second) => {
   if (first.length !== second.length) return false;

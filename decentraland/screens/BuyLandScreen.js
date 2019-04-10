@@ -59,9 +59,12 @@ export class BuyLandScreen extends React.Component {
 
     const typeDescription = type == ESTATE ? "Estate" : "Parcel";
 
-    const onSuccess = () => {
+    const onSuccess = async action => {
       showInfo(`${typeDescription} bought successfully.`);
-      storeMyAssets([asset, ...myAssets]);
+
+      const actionId = await action.getId();
+      const boughtAsset = { ...asset, actionId };
+      storeMyAssets([boughtAsset, ...myAssets]);
     };
 
     const onError = (assetForSale, message) => {
@@ -117,7 +120,7 @@ export class BuyLandScreen extends React.Component {
       // that catches the safeExecuteOrder successful event.
       await action.waitForNonceToUpdate();
 
-      afterSuccessfulExecution();
+      afterSuccessfulExecution(action);
     } catch (error) {
       // Note: The current version isn't supporting `failing` events
       // See more:
