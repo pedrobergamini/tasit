@@ -11,6 +11,7 @@ import {
 import ListLandForSaleScreen from "./screens/ListLandForSaleScreen";
 import BuyLandScreen from "./screens/BuyLandScreen";
 import OnboardingHomeScreen from "./screens/OnboardingHomeScreen";
+import MyAccountScreen from "./screens/MyAccountScreen";
 import EthereumQuestionScreen from "./screens/EthereumQuestionScreen";
 import EthereumSignUpScreen from "./screens/EthereumSignUpScreen";
 import EthereumSignInScreen from "./screens/EthereumSignInScreen";
@@ -22,6 +23,7 @@ import { responsiveHeight } from "react-native-responsive-dimensions";
 const defaultNavigationOptions = {
   headerStyle: {
     backgroundColor: Colors.headerBackgroundColor,
+    shadowColor: "transparent",
     height: responsiveHeight(7),
   },
 };
@@ -92,6 +94,19 @@ const MyAssetsNavigator = createStackNavigator(
   }
 );
 
+const MyAccountNavigator = createStackNavigator(
+  {
+    MyAccountScreen: {
+      screen: MyAccountScreen,
+      navigationOptions: headerWithMenuButton,
+    },
+  },
+  {
+    initialRouteName: "MyAccountScreen",
+    defaultNavigationOptions,
+  }
+);
+
 const MainDrawerNavigator = createDrawerNavigator({
   AssetsForSale: {
     screen: AssetsForSaleNavigator,
@@ -103,6 +118,12 @@ const MainDrawerNavigator = createDrawerNavigator({
     screen: MyAssetsNavigator,
     navigationOptions: {
       drawerLabel: "My land",
+    },
+  },
+  MyAccount: {
+    screen: MyAccountNavigator,
+    navigationOptions: {
+      drawerLabel: "My account",
     },
   },
 });
