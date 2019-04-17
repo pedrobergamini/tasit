@@ -28,7 +28,7 @@ exports[`AccountCreationProgress ProgressMessageAndLink with a message and with 
     <LinkToBlockchain
       action={
         Object {
-          "getTransaction": [Function],
+          "getId": [Function],
         }
       }
     />
@@ -106,7 +106,7 @@ exports[`AccountCreationProgress waiting for setup - waiting for ETH funding 1`]
 <ProgressMessageAndLink
   action={
     Object {
-      "getTransaction": [Function],
+      "getId": [Function],
     }
   }
   key="FUNDING_WITH_ETH"
@@ -118,7 +118,7 @@ exports[`AccountCreationProgress waiting for setup - waiting for MANA funding 1`
 <ProgressMessageAndLink
   action={
     Object {
-      "getTransaction": [Function],
+      "getId": [Function],
     }
   }
   key="FUNDING_WITH_MANA"
@@ -131,7 +131,7 @@ Array [
   <ProgressMessageAndLink
     action={
       Object {
-        "getTransaction": [Function],
+        "getId": [Function],
       }
     }
     key="FUNDING_WITH_MANA"
@@ -140,7 +140,7 @@ Array [
   <ProgressMessageAndLink
     action={
       Object {
-        "getTransaction": [Function],
+        "getId": [Function],
       }
     }
     key="APPROVING_MARKETPLACE"
@@ -160,7 +160,7 @@ exports[`AccountCreationProgress waiting for setup - waiting for marketplace app
 <ProgressMessageAndLink
   action={
     Object {
-      "getTransaction": [Function],
+      "getId": [Function],
     }
   }
   key="APPROVING_MARKETPLACE"
