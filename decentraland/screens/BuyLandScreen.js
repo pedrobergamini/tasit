@@ -9,7 +9,6 @@ import {
 import BuyLand from "@presentational/BuyLand";
 import PropTypes from "prop-types";
 import { showError, showInfo, getContracts } from "@helpers";
-import { storeMyAssets } from "@helpers/storage";
 import AssetTypes from "@constants/AssetTypes";
 const { ESTATE, PARCEL } = AssetTypes;
 
@@ -45,7 +44,6 @@ export class BuyLandScreen extends React.Component {
     const {
       navigation,
       accountInfo,
-      myAssets,
       removeLandForSale,
       prependLandForSaleToList,
       removeMyAssetFromList,
@@ -59,12 +57,8 @@ export class BuyLandScreen extends React.Component {
 
     const typeDescription = type == ESTATE ? "Estate" : "Parcel";
 
-    const onSuccess = async action => {
+    const onSuccess = async () => {
       showInfo(`${typeDescription} bought successfully.`);
-
-      const actionId = await action.getId();
-      const boughtAsset = { ...asset, actionId };
-      storeMyAssets([boughtAsset, ...myAssets]);
     };
 
     const onError = (assetForSale, message) => {
