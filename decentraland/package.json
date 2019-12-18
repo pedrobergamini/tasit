@@ -49,7 +49,7 @@
     "react-native-appearance": "~0.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.23",
+    "@types/jest": "^24.0.24",
     "@types/react": "^16.8.23",
     "@types/react-native": "^0.60.22",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
